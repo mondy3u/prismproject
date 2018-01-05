@@ -1,0 +1,244 @@
+dtmc
+
+
+
+module joueur1
+
+	carteJouerJ1 : [0..4] init 0; //Carte jouer pendant sont tour & 0 rien , 1 carte trefle, 2 coeur, 3 carreau, 4 pique
+	mentirJ1 : bool init false; // false pas mentir, vrai mentir
+
+	[poserJ1] (tour = 0 & nbCarteTrefleJ1 > 0 
+			  & nbCarteCoeurJ1 > 0 
+			  & nbCarteCarreauJ1 > 0 
+ 			  & nbCartePiqueJ1 > 0 ) -> 1/4 : (carteJouerJ1' = 1) + 1/4 : (carteJouerJ1' = 2) + 1/4 : (carteJouerJ1' = 3) + 1/4 : (carteJouerJ1' = 4);
+
+	[poserJ1] (tour = 0 & nbCarteTrefleJ1 = 0 
+			  & nbCarteCoeurJ1 > 0 
+			  & nbCarteCarreauJ1 > 0 
+ 			  & nbCartePiqueJ1 > 0 ) ->  1/3 : (carteJouerJ1' = 2) + 1/3 : (carteJouerJ1' = 3) + 1/3 : (carteJouerJ1' = 4);
+
+ 	[poserJ1] (tour = 0 & nbCarteTrefleJ1 > 0 
+			  & nbCarteCoeurJ1 = 0 
+			  & nbCarteCarreauJ1 > 0 
+ 			  & nbCartePiqueJ1 > 0 ) ->  1/3 : (carteJouerJ1' = 1) + 1/3 : (carteJouerJ1' = 3) + 1/3 : (carteJouerJ1' = 4);
+
+	[poserJ1] (tour = 0 & nbCarteTrefleJ1 = 0 
+			  & nbCarteCoeurJ1 = 0 
+			  & nbCarteCarreauJ1 >0 
+ 			  & nbCartePiqueJ1 > 0 ) ->  1/2 : (carteJouerJ1' = 3) + 1/2 : (carteJouerJ1' = 4);
+
+	[poserJ1] (tour = 0 & nbCarteTrefleJ1 > 0 
+			  & nbCarteCoeurJ1 > 0 
+			  & nbCarteCarreauJ1 = 0 
+ 			  & nbCartePiqueJ1 > 0 ) ->  1/3 : (carteJouerJ1' = 1) + 1/3 : (carteJouerJ1' = 2) + 1/3 : (carteJouerJ1' = 4);
+
+	[poserJ1] (tour = 0 & nbCarteTrefleJ1 = 0 
+			  & nbCarteCoeurJ1 > 0 
+			  & nbCarteCarreauJ1 = 0 
+ 			  & nbCartePiqueJ1 > 0 ) ->  1/2 : (carteJouerJ1' = 2) + 1/2 : (carteJouerJ1' = 4); 
+
+	[poserJ1] (tour = 0 & nbCarteTrefleJ1 > 0 
+			  & nbCarteCoeurJ1 = 0 
+			  & nbCarteCarreauJ1 = 0 
+ 			  & nbCartePiqueJ1 > 0 ) ->  1/2 : (carteJouerJ1' = 1) + 1/2 : (carteJouerJ1' = 4);
+
+	[poserJ1] (tour = 0 & nbCarteTrefleJ1 = 0 
+			  & nbCarteCoeurJ1 = 0 
+			  & nbCarteCarreauJ1 = 0 
+ 			  & nbCartePiqueJ1 > 0 ) ->  1/3 : (carteJouerJ1' = 1) + 1/3 : (carteJouerJ1' = 3) + 1/3 : (carteJouerJ1' = 2);
+
+	[poserJ1] (tour = 0 & nbCarteTrefleJ1 > 0 
+			  & nbCarteCoeurJ1 > 0 
+			  & nbCarteCarreauJ1 > 0 
+ 			  & nbCartePiqueJ1 = 0 ) ->  (carteJouerJ1' = 4);
+
+	[poserJ1] (tour = 0 & nbCarteTrefleJ1 = 0 
+			  & nbCarteCoeurJ1 > 0 
+			  & nbCarteCarreauJ1 > 0 
+ 			  & nbCartePiqueJ1 = 0 ) ->  1/2 : (carteJouerJ1' = 2) + 1/2 : (carteJouerJ1' = 4);
+
+	[poserJ1] (tour = 0 & nbCarteTrefleJ1 > 0 
+			  & nbCarteCoeurJ1 = 0 
+			  & nbCarteCarreauJ1 > 0 
+ 			  & nbCartePiqueJ1 = 0 ) ->  1/2 : (carteJouerJ1' = 1) + 1/2: (carteJouerJ1' = 3);
+
+	[poserJ1] (tour = 0 & nbCarteTrefleJ1 = 0 
+			  & nbCarteCoeurJ1 = 0 
+			  & nbCarteCarreauJ1 > 0 
+ 			  & nbCartePiqueJ1 = 0 ) -> (carteJouerJ1' = 3);
+
+	[poserJ1] (tour = 0 & nbCarteTrefleJ1 > 0 
+			  & nbCarteCoeurJ1 > 0 
+			  & nbCarteCarreauJ1 = 0 
+ 			  & nbCartePiqueJ1 = 0 ) ->  1/2 : (carteJouerJ1' = 1) + 1/2 : (carteJouerJ1' = 2);
+
+	[poserJ1] (tour = 0 & nbCarteTrefleJ1 = 0 
+			  & nbCarteCoeurJ1 > 0 
+			  & nbCarteCarreauJ1 = 0 
+ 			  & nbCartePiqueJ1 = 0 ) ->  (carteJouerJ1' = 2);
+
+	[poserJ1] (tour = 0 & nbCarteTrefleJ1 > 0 
+			  & nbCarteCoeurJ1 = 0 
+			  & nbCarteCarreauJ1 = 0 
+ 			  & nbCartePiqueJ1 = 0 ) ->  (carteJouerJ1' = 1);
+
+	[] (carteJouerJ1 != premierCarte & carteJouerJ1 > 0) -> (mentirJ1' = true);
+	[] (carteJouerJ1 = premierCarte & carteJouerJ1 > 0) -> (mentirJ1' = false);
+	[verifJ1] (carteJouerJ1 > 0) -> (carteJouerJ1' = 0);
+
+endmodule
+
+module joueur2 
+
+	carteJouerJ2 : [0..4] init 0; //Carte jouer pendant sont tour & 0 rien , 1 carte trefle, 2 coeur, 3 carreau, 4 pique
+	mentirJ2 : bool init false; // false pas mentir, vrai mentir
+
+	[poserJ2] (tour = 1 & nbCarteTrefleJ2 > 0 
+			  & nbCarteCoeurJ2 > 0 
+			  & nbCarteCarreauJ2 > 0 
+ 			  & nbCartePiqueJ2 > 0 ) -> 1/4 : (carteJouerJ2' = 1) + 1/4 : (carteJouerJ2' = 2) + 1/4 : (carteJouerJ2' = 3) + 1/4 : (carteJouerJ2' = 4);
+
+	[poserJ2] (tour = 1 & nbCarteTrefleJ2 = 0 
+			  & nbCarteCoeurJ2 > 0 
+			  & nbCarteCarreauJ2 > 0 
+ 			  & nbCartePiqueJ2 > 0 ) ->  1/3 : (carteJouerJ2' = 2) + 1/3 : (carteJouerJ2' = 3) + 1/3 : (carteJouerJ2' = 4);
+
+ 	[poserJ2] (tour = 1 & nbCarteTrefleJ2 > 0 
+			  & nbCarteCoeurJ2 = 0 
+			  & nbCarteCarreauJ2> 0 
+ 			  & nbCartePiqueJ2 > 0 ) ->  1/3 : (carteJouerJ2' = 1) + 1/3 : (carteJouerJ2' = 3) + 1/3 : (carteJouerJ2' = 4);
+
+	[poserJ2] (tour = 1 & nbCarteTrefleJ2 = 0 
+			  & nbCarteCoeurJ2 = 0 
+			  & nbCarteCarreauJ2 >0 
+ 			  & nbCartePiqueJ2 > 0 ) ->  1/2 : (carteJouerJ2' = 3) + 1/2 : (carteJouerJ2' = 4);
+
+	[poserJ2] (tour = 1 & nbCarteTrefleJ2 > 0 
+			  & nbCarteCoeurJ2 > 0 
+			  & nbCarteCarreauJ2 = 0 
+ 			  & nbCartePiqueJ2 > 0 ) ->  1/3 : (carteJouerJ2' = 1) + 1/3 : (carteJouerJ2' = 2) + 1/3 : (carteJouerJ2' = 4);
+
+	[poserJ2] (tour = 1 & nbCarteTrefleJ2 = 0 
+			  & nbCarteCoeurJ2 > 0 
+			  & nbCarteCarreauJ2 = 0 
+ 			  & nbCartePiqueJ2 > 0 ) ->  1/2 : (carteJouerJ2' = 2) + 1/2 : (carteJouerJ2' = 4); 
+
+	[poserJ2] (tour = 1 & nbCarteTrefleJ2 > 0 
+			  & nbCarteCoeurJ2 = 0 
+			  & nbCarteCarreauJ2 = 0 
+ 			  & nbCartePiqueJ2 > 0 ) ->  1/2 : (carteJouerJ2' = 1) + 1/2 : (carteJouerJ2' = 4);
+
+	[poserJ2] (tour = 1 & nbCarteTrefleJ2 = 0 
+			  & nbCarteCoeurJ2 = 0 
+			  & nbCarteCarreauJ2 = 0 
+ 			  & nbCartePiqueJ2 > 0 ) ->  1/3 : (carteJouerJ2' = 1) + 1/3 : (carteJouerJ2' = 3) + 1/3 : (carteJouerJ2' = 2);
+
+	[poserJ2] (tour = 1 & nbCarteTrefleJ2 > 0 
+			  & nbCarteCoeurJ2 > 0 
+			  & nbCarteCarreauJ2 > 0 
+ 			  & nbCartePiqueJ2 = 0 ) ->  (carteJouerJ2' = 4);
+
+	[poserJ2] (tour = 1 & nbCarteTrefleJ2 = 0 
+			  & nbCarteCoeurJ2 > 0 
+			  & nbCarteCarreauJ2 > 0 
+ 			  & nbCartePiqueJ2 = 0 ) ->  1/2 : (carteJouerJ2' = 2) + 1/2 : (carteJouerJ2' = 4);
+
+	[poserJ2] (tour = 1 & nbCarteTrefleJ2 > 0 
+			  & nbCarteCoeurJ2 = 0 
+			  & nbCarteCarreauJ2 > 0 
+ 			  & nbCartePiqueJ2 = 0 ) ->  1/2 : (carteJouerJ2' = 1) + 1/2: (carteJouerJ2' = 3);
+
+	[poserJ2] (tour = 1 & nbCarteTrefleJ2 = 0 
+			  & nbCarteCoeurJ2 = 0 
+			  & nbCarteCarreauJ2 > 0 
+ 			  & nbCartePiqueJ2 = 0 ) -> (carteJouerJ2' = 3);
+
+	[poserJ2] (tour = 1 & nbCarteTrefleJ2 > 0 
+			  & nbCarteCoeurJ2 > 0 
+			  & nbCarteCarreauJ2 = 0 
+ 			  & nbCartePiqueJ2 = 0 ) ->  1/2 : (carteJouerJ2' = 1) + 1/2 : (carteJouerJ2' = 2);
+
+	[poserJ2] (tour = 1 & nbCarteTrefleJ2 = 0 
+			  & nbCarteCoeurJ2 > 0 
+			  & nbCarteCarreauJ2 = 0 
+ 			  & nbCartePiqueJ2 = 0 ) ->  (carteJouerJ2' = 2);
+
+	[poserJ2] (tour = 1 & nbCarteTrefleJ2 > 0 
+			  & nbCarteCoeurJ2 = 0 
+			  & nbCarteCarreauJ2 = 0 
+ 			  & nbCartePiqueJ2 = 0 ) ->  (carteJouerJ2' = 1);
+
+
+	[] (carteJouerJ2 != premierCarte & carteJouerJ2 > 0) -> (mentirJ2' = true);
+	[] (carteJouerJ2 = premierCarte & carteJouerJ2 > 0) -> (mentirJ2' = false);
+	[verifJ2] (carteJouerJ2 > 0) -> (carteJouerJ2' = 0);
+
+endmodule
+
+
+module jeu
+	//Carte Joueur 1 
+	nbCarteTrefleJ1 : [0..2] init 2; // Nombre de carte trefle joueur1
+	nbCarteCoeurJ1 : [0..2] init 2; // Nombre de carte coeur joueur1
+	nbCarteCarreauJ1 : [0..2] init 2; // Nombre de carte carreau joueur1
+	nbCartePiqueJ1 : [0..2] init 2; //Nombre de carte Pique 
+	nbCarteTotalJ1 : [0..8] init 8; // Nombre total de carte joueur1
+	annonceMenteurJ1 : bool init false; //annonce que l'autre joueur a menti
+	
+	//Carte joueur 2
+	nbCarteTrefleJ2 : [0..2] init 2; // Nombre de carte trefle joueur1
+	nbCarteCoeurJ2 : [0..2] init 2; // Nombre de carte coeur joueur1
+	nbCarteCarreauJ2 : [0..2] init 2; // Nombre de carte carreau joueur1
+	nbCartePiqueJ2 : [0..2] init 2; //Nombre de carte Pique joueur1
+	nbCarteTotalJ2 : [0..8] init 8; // Nombre total de carte joueur1
+	annonceMenteurJ2 : bool init false; //annonce que l'autre joueur a menti
+
+	nbCarteTotal : [0..16] init 0; // Nombre sur le plateau
+	nbTrefle : [0..4] init 0; // Nombre sur le plateau
+	nbCoeur : [0..4] init 0; // Nombre sur le plateau
+	nbCarreau : [0..4] init 0; // Nombre sur le plateau
+	nbPique : [0..4] init 0; // Nombre sur le plateau
+
+	premierCarte : [1..4] init 2; // 1=trefle, 2=coeur, 3=carreau, 4=pique
+	tour : [0..1] init 0; //0 tour J1 , 1 tour J2
+	dernierCarteJouer : [0..4] init 0;
+
+	gagner : [0..2] init 0; //0 initialisation
+				//1 Joueur1 gagne
+				//2 Joueur2 gagne
+
+	[poserJ1] (tour = 0) -> (tour'=1);
+	[poserJ2] (tour = 1) -> (tour'=0);
+
+	//Verif J1
+	[verifJ1] (carteJouerJ1 = 1 & nbCarteTrefleJ1 > 0 & nbCarteTotalJ1 > 0 & nbTrefle < 4 & nbCarteTotal < 16) 
+		-> (nbCarteTrefleJ1' = nbCarteTrefleJ1-1) & (nbCarteTotalJ1' = nbCarteTotalJ1-1) & (nbTrefle' = nbTrefle+1) & (nbCarteTotal' = nbCarteTotal+1) & (dernierCarteJouer'=1);
+
+	[verifJ1] (carteJouerJ1 = 2 & nbCarteCoeurJ1 > 0 & nbCarteTotalJ1 > 0 & nbCoeur < 4 & nbCarteTotal < 16)  
+		-> (nbCarteCoeurJ1' = nbCarteCoeurJ1-1) & (nbCarteTotalJ1' = nbCarteTotalJ1-1) & (nbCoeur' = nbCoeur+1) & (nbCarteTotal' = nbCarteTotal+1) & (dernierCarteJouer'=2);
+
+	[verifJ1] (carteJouerJ1 = 3 & nbCarteCarreauJ1 > 0 & nbCarteTotalJ1 > 0 & nbCarreau < 4 & nbCarteTotal < 16)  
+		-> (nbCarteCarreauJ1' = nbCarteCarreauJ1-1) & (nbCarteTotalJ1' = nbCarteTotalJ1-1) & (nbCarreau' = nbCarreau+1) & (nbCarteTotal' = nbCarteTotal+1) & (dernierCarteJouer'=3);
+
+	[verifJ1] (carteJouerJ1 = 4 & nbCartePiqueJ1 > 0 & nbCarteTotalJ1 > 0 & nbPique < 4 & nbCarteTotal < 16) 
+		-> (nbCartePiqueJ1' = nbCartePiqueJ1-1) & (nbCarteTotalJ1' = nbCarteTotalJ1-1) & (nbPique' = nbPique+1) & (nbCarteTotal' = nbCarteTotal+1)& (dernierCarteJouer'=4);
+
+	
+	//Verif J2
+	[verifJ2] (carteJouerJ2 = 1  & nbCarteTrefleJ2 > 0 & nbCarteTotalJ2 > 0 & nbTrefle < 4 & nbCarteTotal < 16) 
+		-> (nbCarteTrefleJ2' = nbCarteTrefleJ2-1) & (nbCarteTotalJ2' = nbCarteTotalJ2-1) & (nbTrefle' = nbTrefle+1) & (nbCarteTotal' = nbCarteTotal+1) & (dernierCarteJouer'=1);
+
+	[verifJ2] (carteJouerJ2 = 2 &  nbCarteCoeurJ2 > 0 & nbCarteTotalJ2 > 0 & nbCoeur < 4 & nbCarteTotal < 16)
+		-> (nbCarteCoeurJ2' = nbCarteCoeurJ2-1) & (nbCarteTotalJ2' = nbCarteTotalJ2-1) & (nbCoeur' = nbCoeur+1) & (nbCarteTotal' = nbCarteTotal+1) & (dernierCarteJouer'=2);
+
+	[verifJ2] (carteJouerJ2 = 3 & nbCarteCarreauJ2 > 0 & nbCarteTotalJ2 > 0 & nbCarreau < 4 & nbCarteTotal < 16) 
+		-> (nbCarteCarreauJ2' = nbCarteCarreauJ2-1) & (nbCarteTotalJ2' = nbCarteTotalJ2-1) & (nbCarreau' = nbCarreau+1) & (nbCarteTotal' = nbCarteTotal+1)& (dernierCarteJouer'=3);
+
+	[verifJ2] (carteJouerJ2 = 4 & nbCartePiqueJ2 > 0 & nbCarteTotalJ2 > 0 & nbPique < 4 & nbCarteTotal < 16) 
+		-> (nbCartePiqueJ2' = nbCartePiqueJ2-1) & (nbCarteTotalJ2' = nbCarteTotalJ2-1) & (nbPique' = nbPique+1) & (nbCarteTotal' = nbCarteTotal+1)& (dernierCarteJouer'=4);
+	
+	[] (nbCarteTotalJ1 = 0) -> (gagner'=1);
+	[] (nbCarteTotalJ2 = 0) -> (gagner'=2);
+
+
+endmodule
