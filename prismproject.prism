@@ -110,19 +110,48 @@ module jeu
 	nbCarteTotalJ2 : [0..8] init 8; // Nombre total de carte joueur1
 	annonceMenteurJ2 : bool init false; //annonce que l'autre joueur a menti
 
-	nbCarteTotal : [0..16] init 0; // Nombre sur le plateau
-	nbTrefle : [0..4] init 0; // Nombre sur le plateau
-	nbCoeur : [0..4] init 0; // Nombre sur le plateau
-	nbCarreau : [0..4] init 0; // Nombre sur le plateau
-	nbPique : [0..4] init 0; // Nombre sur le plateau
+	nbCarteTotal : [0..16] init 0; // Nombre de carte en jeu 
+	nbTrefle : [0..4] init 0; // Nombre de carte en jeu 
+	nbCoeur : [0..4] init 0; // Nombre de carte en jeu 
+	nbCarreau : [0..4] init 0; // Nombre de carte en jeu 
+	nbPique : [0..4] init 0; // Nombre de carte en jeu 
 
-	premierCarte : [1..4] init 2; // 1=trefle, 2=coeur, 3=carreau, 4=pique
+	premierCarte : [0..4] init 0; // 1=trefle, 2=coeur, 3=carreau, 4=pique
 	tour : [0..1] init 0; //0 tour J1 , 1 tour J2
 	dernierCarteJouer : [0..4] init 0;
 
 	gagner : [0..2] init 0; //0 initialisation
 				//1 Joueur1 gagne
 				//2 Joueur2 gagne
+
+	[aMenti] nbCarteTotalJ1 <= 4 -> 1/2 : (annonceMenteurJ2' = true) + 1/2 : (annonceMenteurJ2' = false); // Premier stratégie annonce de J2 que J1 a menti si J1 a moins de 4 cartes
+
+	[verifMenteur] annonceMenteurJ2 = true & mentirJ1 = true -> (nbCarteTrefleJ1'= nbCarteTrefleJ1 + nbTrefle) //J2 annonce que le J1 a menti sur la couleur et c'est vrai alors le J1 récupère les cartes
+								& (nbTrefle' = 0)
+								& (nbCarteCoeurJ1'= nbCarteCoeurJ1 + nbCoeur)
+								& (nbCoeur' = 0)
+								& (nbCarteCarreauJ1'= nbCarteCarreauJ1 + nbCarreau) 
+								& (nbCarreau' = 0)
+								& (nbCartePiqueJ1'= nbCartePiqueJ1 + nbPique)
+								& (nbPique' = 0) 
+								& (nbCarteTotalJ1'= nbCarteTotalJ1 + nbCarteTotal)
+								& (annonceMenteurJ2' = false)
+								& (premierCarte' = 0);
+
+	[verifMenteur] annonceMenteurJ2 = true & mentirJ1 = false -> (nbCarteTrefleJ2'= nbCarteTrefleJ2 + nbTrefle) //J2 annonce que le J1 a menti sur la couleur et c'est faux alors le J2 récupère les cartes
+								& (nbTrefle' = 0)
+								& (nbCarteCoeurJ2'= nbCarteCoeurJ2 + nbCoeur)
+								& (nbCoeur' = 0)
+								& (nbCarteCarreauJ2'= nbCarteCarreauJ2 + nbCarreau) 
+								& (nbCarreau' = 0)
+								& (nbCartePiqueJ2'= nbCartePiqueJ2 + nbPique)
+								& (nbPique' = 0) 
+								& (nbCarteTotalJ2'= nbCarteTotalJ2 + nbCarteTotal)
+								& (annonceMenteurJ1' = false)
+								& (premierCarte' = 0);
+
+	[initCarteDepart] premierCarte = 0 -> 1/4 : (premierCarte'=1) + 1/4 :(premierCarte'=2) + 1/4 : (premierCarte'=3) + 1/4 : (premierCarte'=4); //initialse la premier carte du jeu
+
 
 	//Verif J1
 	[verif] (carteJouerJ1 = 1 & nbCarteTrefleJ1 > 0 & nbCarteTotalJ1 > 0 & nbTrefle < 4 & nbCarteTotal < 16) 
